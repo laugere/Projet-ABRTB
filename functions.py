@@ -25,7 +25,7 @@ def CreateABRTBFromFile(path='defaultABRTB.txt'):
         ABRvalues = splittedString[0].split(':')
         Tvalues = splittedString[1].strip('\n').split(':')
         T = []
-        for i in range(0, len(Tvalues) - 1):
+        for i in range(0, len(Tvalues)):
             T.append(int(Tvalues[i]))
         m = int(ABRvalues[0])
         M = int(ABRvalues[1])
@@ -107,15 +107,18 @@ def IsIntervalDisjoint(noeud, tab):
 def SearchInteger(ABRTB, value):
     ABRTBTemp = ABRTB.searchValue(value)
     if ABRTBTemp:
-        print(ABRTBTemp.T)
+        print("La valeur {0} est contenu dans l'intervalle m = {1}, M = {2}.".format(value, ABRTBTemp.m, ABRTBTemp.M))
+        print("T = {0}".format(ABRTBTemp.T))
     else:
         print("Aucun intervalle ne contient {0}.".format(value))
 
 def DeleteInteger(ABRTB, value):
-    print("Coming Soon")
+    ABRTB.delete(value)
+    DisplayABRTB(ABRTB)
 
 def InsertInteger(ABRTB, value):
     ABRTB.insert(value)
+    DisplayABRTB(ABRTB)
 
 def ABRTBToABR():
     print("Coming Soon")

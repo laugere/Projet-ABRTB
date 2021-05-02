@@ -33,6 +33,13 @@ class Noeud:
                 print("Insertion impossible")
             else:
                 self.sag.insert(value)
+    
+    # Delete value in ABRTB
+    def delete(self, value):
+        noeud = self.searchValue(value)
+        if noeud:
+            noeud.T.remove(value)
+
 
     # Insert Noeud with all value and T TBR
     def insertImport(self, m, M, T):
@@ -91,7 +98,6 @@ class Noeud:
             return self.sad.searchValue(value) if self.sad else None
         if value < self.m:
             return self.sag.searchValue(value) if self.sag else None
-        return self
 
     # Test if the ABRTB is an ABR
     def isABR(self):
