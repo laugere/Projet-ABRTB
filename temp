@@ -1,0 +1,57 @@
+def InitMenu():
+    # Create the interface menu
+    menu = ConsoleMenu("Travaux Pratiques",
+                       "Implémentation et Manipulation d'ABR de Tas Binaires")
+    menu.clear_screen()
+
+    ###############################################################################################
+    # Generate mode menu item
+    fileToABRTB_item = FunctionItem(
+        "Fichier vers ABRTB", ActionSelect, args=[0], should_exit=True)
+    randomABRTB_item = FunctionItem(
+        "ABRTB aléatoire", ActionSelect, args=[3], should_exit=True)
+    ###############################################################################################
+
+    ###############################################################################################
+    # Generate and save menu item
+    ABRTBToFile_item = FunctionItem(
+        "ABRTB vers fichier", ActionSelect, args=[1])
+    displayABRTB_item = FunctionItem(
+        "Affichage à l'écran", ActionSelect, args=[2])
+    verifyABRTB_item = FunctionItem("Vérification", ActionSelect, args=[4])
+    # Generate and save sub menu
+    genSave_menu = SelectionMenu(
+        [ABRTBToFile_item, displayABRTB_item, verifyABRTB_item])
+    genSaveSubMenu_item = SubmenuItem(
+        "Génération, sauvegarde et affichage des ABRTBs", genSave_menu, menu)
+    ###############################################################################################
+
+    ###############################################################################################
+    # Manipulate menu item
+    searchInteger_item = FunctionItem(
+        "Recherche d'un entier", ActionSelect, args=[5])
+    deleteInteger_item = FunctionItem(
+        "Suppression d'un entier", ActionSelect, args=[6])
+    insertInteger_item = FunctionItem(
+        "Insertion d'un entier", ActionSelect, args=[7])
+    ABRTBToABR_item = FunctionItem("ABRTB vers ABR", ActionSelect, args=[8])
+    ABRTBToABRk_item = FunctionItem(
+        "ABRTB vers ABR des k-ièmes plus grands éléments", ActionSelect, args=[9])
+    # Manipulate sub menu
+    manipulate_menu = SelectionMenu(
+        [searchInteger_item, deleteInteger_item, insertInteger_item, ABRTBToABR_item, ABRTBToABRk_item])
+    manipulateSubMenu_item = SubmenuItem(
+        "Manipulation des ABRTBs", manipulate_menu, menu)
+    ###############################################################################################
+
+    ###############################################################################################
+    # Generating the interface menu
+    if mainABRTB == None:
+        menu.append_item(fileToABRTB_item)
+        menu.append_item(randomABRTB_item)
+    else:
+        menu.append_item(genSaveSubMenu_item)
+        menu.append_item(manipulateSubMenu_item)
+    # Show the generated menu
+    menu.show()
+    ###############################################################################################
