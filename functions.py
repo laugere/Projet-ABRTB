@@ -1,12 +1,11 @@
 import random
 
-import main
-import noeud
-import functions
-
+import abr
 
 ###############################################################################################
 # Generate, save and display ABRTB section
+
+
 def CreateABRTBFromFile(path='defaultABRTB.txt'):
     if path == '':
         path = 'defaultABRTB.txt'
@@ -31,25 +30,25 @@ def CreateABRTBFromFile(path='defaultABRTB.txt'):
         M = int(ABRvalues[1])
 
         if count == 0:
-            abr = noeud.Noeud(m, M, T)
+            abrtb = abr.Noeud_ABRTB(m, M, T)
             count += 1
         else:
-            abr.insertImport(m, M, T)
+            abrtb.insertImport(m, M, T)
 
-    return abr
+    return abrtb
 
 
 def ExportABRTBToFile(ABRTB, path='defaultExport.txt'):
     if path == '':
         path = 'defaultExport.txt'
     file = open(path, 'w')
-    tableau = ABRTB.getParcours_prefixe([])
+    tableau = ABRTB.getParcours_prefixe_str([])
     file.writelines(tableau)
     file.close
 
 
 def DisplayABRTB(ABRTB):
-    tableau = ABRTB.getParcours_prefixe([])
+    tableau = ABRTB.getParcours_prefixe_str([])
     for line in tableau:
         print(line.replace('\n', ''))
 
@@ -64,7 +63,7 @@ def RandomABRTB(p, q):
     T = []
     for i in range(random.randint(1, 10)):
         T.append(random.randint(m, M))
-    ABRTB = noeud.Noeud(m, M, T)
+    ABRTB = abr.Noeud_ABRTB(m, M, T)
     for i in range(nbNoeuds):
         m = random.randint(min_m, max_M)
         M = random.randint(m, max_M)
@@ -78,7 +77,7 @@ def RandomABRTB(p, q):
 def VerifABRTB(ABRTB):
     if ABRTB.isABR() == False:
         print("Ce n'est pas un ABR")
-    
+
     tab = []
     if IsIntervalDisjoint(ABRTB, tab) == False:
         print("Les intervalles ne sont pas disjoints")
@@ -104,24 +103,41 @@ def IsIntervalDisjoint(noeud, tab):
 
 ###############################################################################################
 # Manipulate ABRTB section
+
+
 def SearchInteger(ABRTB, value):
     ABRTBTemp = ABRTB.searchValue(value)
     if ABRTBTemp:
-        print("La valeur {0} est contenu dans l'intervalle m = {1}, M = {2}.".format(value, ABRTBTemp.m, ABRTBTemp.M))
+        print("La valeur {0} est contenu dans l'intervalle m = {1}, M = {2}.".format(
+            value, ABRTBTemp.m, ABRTBTemp.M))
         print("T = {0}".format(ABRTBTemp.T))
     else:
         print("Aucun intervalle ne contient {0}.".format(value))
+
 
 def DeleteInteger(ABRTB, value):
     ABRTB.delete(value)
     DisplayABRTB(ABRTB)
 
+
 def InsertInteger(ABRTB, value):
     ABRTB.insert(value)
     DisplayABRTB(ABRTB)
 
-def ABRTBToABR():
-    print("Coming Soon")
+
+def ABRTBToABR(ABRTB):
+    tableau = ABRTB.getParcours_prefixe([])
+    abr_result = None
+    for value in tableau:
+        if abr_result is None:
+            abr_result = abr.Noeud_ABR(value)
+        else:
+            abr_result.insert(value)
+    print("Parcours préfixe (SP (A)) : ")
+    print(abr_result.prefixe([]))
+    print("Parcours infixe (SI(A)) : ")
+    print(abr_result.infixe([]))
+
 
 def ABRTBToABRkieme():
     print("Coming Soon")
