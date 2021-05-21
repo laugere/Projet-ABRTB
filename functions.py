@@ -53,24 +53,38 @@ def DisplayABRTB(ABRTB):
         print(line.replace('\n', ''))
 
 
+def list_to_pairs(l):
+    return [l[i:i+2] for i in range(0, len(l), 2)]
+
+
+def f(z, a, b):
+    intervals = [(0, 0)]
+    while not all(x[1]-x[0] >= random.randint(1, 15) for x in intervals):
+        intervals = list_to_pairs(sorted(random.sample(range(a, b), z*2)))
+    return intervals
+
+
+# suffix order
+f(6, 1, 100)
+
+
 def RandomABRTB(p, q):
     random.seed(104724738)
+    ABRTB = None
     nbNoeuds = p
     min_m = 1
     max_M = q
-    m = random.randint(min_m, max_M)
-    M = random.randint(m, max_M)
-    T = []
-    for i in range(random.randint(1, 10)):
-        T.append(random.randint(m, M))
-    ABRTB = abr.Noeud_ABRTB(m, M, T)
-    for i in range(nbNoeuds):
-        m = random.randint(min_m, max_M)
-        M = random.randint(m, max_M)
-        T = []
-        for i in range(random.randint(1, 10)):
-            T.append(random.randint(m, M))
-        ABRTB.insertImport(m, M, T)
+    intervals = f(nbNoeuds, min_m, max_M)
+    for interval in intervals:
+            m = interval[0]
+            M = interval[1]
+            T = []
+            for i in range(random.randint(1, 10)):
+                T.append(random.randint(m, M))
+            if ABRTB is None:
+                ABRTB = abr.Noeud_ABRTB(m, M, T)
+            else:
+                ABRTB.insertImport(m, M, T)
     return ABRTB
 
 
