@@ -142,8 +142,6 @@ def IsVerifIntervalTasOk(noeud):
     return IsVerifIntervalTasOk(noeud.sag) and IsVerifIntervalTasOk(noeud.sad) and isOk
     
 
-
-
 def IsMaxTasBinaire(tab, i, n):
     if i >= int((n - 2) / 2):
         return True
@@ -195,6 +193,60 @@ def ABRTBToABR(ABRTB):
     print(abr_result.infixe([]))
 
 
-def ABRTBToABRkieme():
-    print("Coming Soon")
+def ABRTBToABRkieme(ABRTB, k):
+    abr_result = None
+    abr_result = NewABR(ABRTB, k, abr_result)
+    print("Parcours préfixe (SP (A)) : ")
+    print(abr_result.prefixe([]))
+    print("Parcours infixe (SI(A)) : ")
+    print(abr_result.infixe([]))
+
+
+def NewABR(ABRTB, k, newAbr):
+    tas = ABRTB.T
+    TriParTas(tas)
+    keme = -1
+    if len(tas) - k >= 0:
+        keme = tas[len(tas) - k]
+
+    if keme != -1:
+        if newAbr is None:
+            newAbr = abr.Noeud_ABR(keme)
+        else:
+            newAbr.insert(keme)
+
+    if ABRTB.sag:
+        NewABR(ABRTB.sag, k, newAbr)
+
+    if ABRTB.sad:
+        NewABR(ABRTB.sad, k, newAbr)
+
+    return newAbr
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+ 
+    if l < n and arr[largest] < arr[l]:
+        largest = l
+ 
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+ 
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+ 
+        heapify(arr, n, largest)
+ 
+ 
+def TriParTas(arr):
+    n = len(arr)
+
+    for i in range(n//2 - 1, -1, -1):
+        heapify(arr, n, i)
+ 
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
 ###############################################################################################

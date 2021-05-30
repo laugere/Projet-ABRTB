@@ -85,7 +85,8 @@ def ActionSelect(index):
         input("\nEntrer pour passer")
     # ABRTB To ABR kieme
     elif index == 9:
-        functions.ABRTBToABRkieme()
+        value = int(input("Entrez la valeur de k (1 : 1ère valeur) : "))
+        functions.ABRTBToABRkieme(mainABRTB, value)
         input("\nEntrer pour passer")
     cls()
 
