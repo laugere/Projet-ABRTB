@@ -89,30 +89,72 @@ def RandomABRTB(p, q):
 
 
 def VerifABRTB(ABRTB):
+    isOk = True
     if ABRTB.isABR() == False:
+        isOk = False
         print("Ce n'est pas un ABR")
 
-    tab = []
-    if IsIntervalDisjoint(ABRTB, tab) == False:
-        print("Les intervalles ne sont pas disjoints")
+    if IsIntervalDisjoint(ABRTB) == True:
+        isOk = False
+        print("Les intervalles sont disjoints")
+
+    if IsVerifIntervalTasOk(ABRTB) == False:
+        isOk = False
+        print("Les max tas binaire ne sont pas corrects ou ne sont pas compris dans les intervalles")
+
+    if isOk == True:
+        print("L'ABRTB est correct")
 
 
-def IsIntervalDisjoint(noeud, tab):
+def IsIntervalDisjoint(noeud):
     if noeud == None:
         return False
 
-    for interval in tab:
-        if noeud.m > interval[0] and noeud.m < interval[1]:
-            return False
-        if noeud.M > interval[0] and noeud.M > interval[1]:
-            return False
+    if(noeud.parent != None):
+        if (noeud.m > noeud.parent.m and noeud.m < noeud.parent.M) or (noeud.M > noeud.parent.m and noeud.M < noeud.parent.M):
+            return True
 
-    interval = []
-    interval.append(noeud.m)
-    interval.append(noeud.M)
-    tab.append(interval)
+    return IsIntervalDisjoint(noeud.sag) or IsIntervalDisjoint(noeud.sad)
 
-    return IsIntervalDisjoint(noeud.sag, tab) or IsIntervalDisjoint(noeud.sad, tab)
+
+def IsVerifIntervalTasOk(noeud):
+    isOk = True
+
+    if noeud == None:
+        return True
+    
+    n = len(noeud.T) - 1
+    isMaxTas = IsMaxTasBinaire(noeud.T, 0, n)
+
+    if isMaxTas == False:
+        isOk = False
+    else:
+        max = noeud.T[0]
+        min = noeud.T[0]
+        for val in noeud.T:
+            if val < min:
+                min = val
+        if (min >= noeud.m and min <= noeud.M) and (max >= noeud.m and max <= noeud.M):
+            isOk = True
+        else:
+            isOk = False
+
+    return IsVerifIntervalTasOk(noeud.sag) and IsVerifIntervalTasOk(noeud.sad) and isOk
+    
+
+
+
+def IsMaxTasBinaire(tab, i, n):
+    if i >= int((n - 2) / 2):
+        return True
+     
+    if(tab[i] >= tab[2 * i + 1] and
+       tab[i] >= tab[2 * i + 2] and
+       IsMaxTasBinaire(tab, 2 * i + 1, n) and
+       IsMaxTasBinaire(tab, 2 * i + 2, n)):
+        return True
+     
+    return False
 ###############################################################################################
 
 ###############################################################################################
