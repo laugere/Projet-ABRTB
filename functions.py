@@ -53,14 +53,14 @@ def DisplayABRTB(ABRTB):
         print(line.replace('\n', ''))
 
 
-def pair_list(l):
+def PairList(l):
     return [l[i:i+2] for i in range(0, len(l), 2)]
 
 
-def f(z, a, b):
+def fo(z, a, b):
     intervals = [(0, 0)]
     while not all(x[1]-x[0] >= random.randint(1, 15) for x in intervals):
-        intervals = pair_list(sorted(random.sample(range(a, b), z*2)))
+        intervals = PairList(sorted(random.sample(range(a, b), z*2)))
     return intervals
 
 
@@ -70,7 +70,7 @@ def RandomABRTB(p, q):
     nbNoeuds = p
     min_m = 1
     max_M = q
-    intervals = f(nbNoeuds, min_m, max_M)
+    intervals = fo(nbNoeuds, min_m, max_M)
     for interval in intervals:
             m = interval[0]
             M = interval[1]
