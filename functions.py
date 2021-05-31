@@ -64,10 +64,6 @@ def f(z, a, b):
     return intervals
 
 
-# suffix order
-f(6, 1, 100)
-
-
 def RandomABRTB(p, q):
     random.seed(104724738)
     ABRTB = None
