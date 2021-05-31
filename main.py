@@ -62,7 +62,7 @@ def ActionSelect(index):
         mainABRTB = functions.RandomABRTB(p, q)
     # Verify ABRTB
     elif index == 4:
-        print(functions.VerifABRTB(mainABRTB))
+        functions.VerifABRTB(mainABRTB)
         input("\nEntrer pour passer")
     # Search value
     elif index == 5:

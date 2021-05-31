@@ -96,7 +96,7 @@ def VerifABRTB(ABRTB):
 
     if IsIntervalDisjoint(ABRTB) == True:
         isOk = False
-        print("Les intervalles sont disjoints")
+        print("Les intervalles se chevauchent")
 
     if IsVerifIntervalTasOk(ABRTB) == False:
         isOk = False
