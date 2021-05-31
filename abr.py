@@ -1,6 +1,7 @@
 import random
 
 import functions
+import math
 
 
 class Noeud_ABRTB:
@@ -21,6 +22,7 @@ class Noeud_ABRTB:
             print("Insertion effectuée dans l'intervalle m = {0}, M = {1}".format(
                 self.m, self.M))
             self.T.append(value)
+            self.siftUp(len(self.T) - 1)
         if value > self.M:
             if self.sad is None:
                 print("Insertion impossible")
@@ -31,6 +33,17 @@ class Noeud_ABRTB:
                 print("Insertion impossible")
             else:
                 self.sag.insert(value)
+
+    def siftUp(self, pos):
+        if pos == 0:
+            return
+        child = self.T[pos]
+        parentpos = int(math.floor((pos-1)/2))
+        parent = self.T[parentpos]
+        if not parent > child:
+            self.T[parentpos] = child
+            self.T[pos] = parent
+            self.siftUp(parentpos)
 
     # Delete value in ABRTB
     def delete(self, value):
