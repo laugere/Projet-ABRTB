@@ -185,7 +185,7 @@ def ABRTBToABR(ABRTB):
             abr_result.insert(value)
     print("Parcours préfixe (SP (A)) : ")
     print(abr_result.prefixe([]))
-    print("Parcours infixe (SI(A)) : ")
+    print("Parcours infixe (SI (A)) : ")
     print(abr_result.infixe([]))
 
 
