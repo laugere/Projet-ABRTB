@@ -53,14 +53,14 @@ def DisplayABRTB(ABRTB):
         print(line.replace('\n', ''))
 
 
-def list_to_pairs(l):
+def pair_list(l):
     return [l[i:i+2] for i in range(0, len(l), 2)]
 
 
 def f(z, a, b):
     intervals = [(0, 0)]
     while not all(x[1]-x[0] >= random.randint(1, 15) for x in intervals):
-        intervals = list_to_pairs(sorted(random.sample(range(a, b), z*2)))
+        intervals = pair_list(sorted(random.sample(range(a, b), z*2)))
     return intervals
 
 
