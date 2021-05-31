@@ -58,7 +58,7 @@ def ActionSelect(index):
     # Create Random ABRTB
     elif index == 3:
         p = int(input("Nombre de noeuds pour l'ABRTB : "))
-        q = int(input("Valeure maximum : "))
+        q = int(input("Valeur maximum : "))
         mainABRTB = functions.RandomABRTB(p, q)
     # Verify ABRTB
     elif index == 4:
